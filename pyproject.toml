@@ -1,0 +1,7 @@
+[project]
+name = "dental-appointment-automation"
+version = "0.1.0"
+description = "Appointment automation with the doctor"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = []
