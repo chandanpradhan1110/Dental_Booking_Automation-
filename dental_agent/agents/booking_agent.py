@@ -1,4 +1,4 @@
-from langchain_Groq import ChatGroq
+from langchain_groq import ChatGroq
 from langchain_core.prompts import ChatPromptTemplate
 from langgraph.prebuilt import ToolNode
 from dental_agent.config.settings import GROQ_API_KEY, MODEL_NAME, TEMPERATURE
