@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>DentalCare AI — Appointment System</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Mono:wght@300;400;500&family=Outfit:wght@300;400;500&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+  <!-- Ambient background blobs -->
+  <div class="bg-orb orb-1"></div>
+  <div class="bg-orb orb-2"></div>
+  <div class="bg-orb orb-3"></div>
+
+  <div class="layout">
+
+    <!-- ── SIDEBAR ───────────────────────────────────────────── -->
+    <aside class="sidebar">
+
+      <div class="sidebar-brand">
+        <div class="brand-icon">
+          <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M16 4C12 4 8 7 8 12c0 3 1 5 2 7l2 8c0.5 2 1.5 3 4 3s3.5-1 4-3l2-8c1-2 2-4 2-7 0-5-4-8-8-8z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
+            <path d="M11 13c1-1 3-1.5 5-1.5s4 0.5 5 1.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <div>
+          <h1 class="brand-name">DentalCare</h1>
+          <span class="brand-sub">AI Appointment System</span>
+        </div>
+      </div>
+
+      <nav class="sidebar-nav">
+        <p class="nav-label">Quick Actions</p>
+        <button class="quick-btn" data-msg="Show available slots for an orthodontist">
+          <span class="btn-icon">📅</span>
+          <span>View Available Slots</span>
+        </button>
+        <button class="quick-btn" data-msg="Show available slots for an orthodontist">
+          <span class="btn-icon">🦷</span>
+          <span>Orthodontist Slots</span>
+        </button>
+        <button class="quick-btn" data-msg="Show available slots for an oral surgeon">
+          <span class="btn-icon">🔬</span>
+          <span>Oral Surgeon Slots</span>
+        </button>
+        <button class="quick-btn" data-msg="Show available slots for a cosmetic dentist">
+          <span class="btn-icon">✨</span>
+          <span>Cosmetic Dentist</span>
+        </button>
+        <button class="quick-btn" data-msg="Show available emergency dentist appointments">
+          <span class="btn-icon">🚨</span>
+          <span>Emergency Slots</span>
+        </button>
+      </nav>
+
+      <div class="sidebar-divider"></div>
+
+      <nav class="sidebar-nav">
+        <p class="nav-label">Our Specialists</p>
+        <div class="doctor-list">
+          <div class="doctor-chip">Dr. John Doe</div>
+          <div class="doctor-chip">Dr. Emily Johnson</div>
+          <div class="doctor-chip">Dr. Sarah Wilson</div>
+          <div class="doctor-chip">Dr. Jane Smith</div>
+          <div class="doctor-chip">Dr. Michael Green</div>
+          <div class="doctor-chip">Dr. Robert Martinez</div>
+          <div class="doctor-chip">Dr. Lisa Brown</div>
+          <div class="doctor-chip">Dr. Susan Davis</div>
+        </div>
+      </nav>
+
+      <div class="sidebar-footer">
+        <button class="reset-btn" id="resetBtn">
+          <svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" width="14" height="14">
+            <path d="M2 8a6 6 0 1 0 1.5-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+            <path d="M2 4v4h4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          New Conversation
+        </button>
+        <p class="powered-by">Powered by LangGraph · Grok-4</p>
+      </div>
+
+    </aside>
+
+    <!-- ── MAIN CHAT ──────────────────────────────────────────── -->
+    <main class="chat-area">
+
+      <header class="chat-header">
+        <div class="header-left">
+          <div class="status-dot"></div>
+          <span class="header-title">AI Dental Assistant</span>
+        </div>
+        <div class="header-right">
+          <span class="model-badge">Grok-4</span>
+        </div>
+      </header>
+
+      <!-- Messages -->
+      <div class="messages-container" id="messagesContainer">
+
+        <!-- Welcome message -->
+        <div class="message message-ai welcome-msg" id="welcomeMsg">
+          <div class="msg-avatar">
+            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M12 3C9 3 6 5.25 6 9c0 2.25.75 3.75 1.5 5.25L9 19.5c.375 1.5 1.125 2.25 3 2.25s2.625-.75 3-2.25l1.5-5.25C17.25 12.75 18 11.25 18 9c0-3.75-3-6-6-6z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
+            </svg>
+          </div>
+          <div class="msg-body">
+            <div class="msg-meta">DentalCare AI <span class="msg-time" data-time="now"></span></div>
+            <div class="msg-content">
+              <p>Welcome to <strong>DentalCare AI</strong> — your intelligent dental appointment assistant.</p>
+              <p>I can help you with:</p>
+              <ul>
+                <li>🔍 Checking available appointment slots</li>
+                <li>📅 Booking appointments with our specialists</li>
+                <li>❌ Cancelling existing appointments</li>
+                <li>🔄 Rescheduling appointments</li>
+                <li>📋 Viewing your appointment history</li>
+              </ul>
+              <p>How can I assist you today?</p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Examples bar -->
+      <div class="examples-bar" id="examplesBar">
+        <button class="example-pill" data-msg="Book patient 1000082 with Emily Johnson on 5/10/2026 9:00">Book an appointment</button>
+        <button class="example-pill" data-msg="Cancel appointment for patient 1000082 at 5/10/2026 9:00">Cancel appointment</button>
+        <button class="example-pill" data-msg="Reschedule patient 1000082 from 5/10/2026 9:00 to 5/12/2026 10:00">Reschedule</button>
+        <button class="example-pill" data-msg="What appointments does patient 1000048 have?">My appointments</button>
+      </div>
+
+      <!-- Input area -->
+      <div class="input-area">
+        <div class="input-wrapper">
+          <textarea
+            id="userInput"
+            class="chat-input"
+            placeholder="Ask about appointments, bookings, cancellations..."
+            rows="1"
+          ></textarea>
+          <button class="send-btn" id="sendBtn" disabled>
+            <svg viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M4 10L16 4L10 16L9 11L4 10Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
+            </svg>
+          </button>
+        </div>
+        <p class="input-hint">Press <kbd>Enter</kbd> to send · <kbd>Shift+Enter</kbd> for new line</p>
+      </div>
+
+    </main>
+  </div>
+
+  <script>
+    const messagesContainer = document.getElementById('messagesContainer');
+    const userInput = document.getElementById('userInput');
+    const sendBtn = document.getElementById('sendBtn');
+    const examplesBar = document.getElementById('examplesBar');
+    const resetBtn = document.getElementById('resetBtn');
+
+    // Set current time in welcome message
+    document.querySelectorAll('.msg-time[data-time="now"]').forEach(el => {
+      el.textContent = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+    });
+
+    // Auto-resize textarea
+    userInput.addEventListener('input', () => {
+      userInput.style.height = 'auto';
+      userInput.style.height = Math.min(userInput.scrollHeight, 140) + 'px';
+      sendBtn.disabled = !userInput.value.trim();
+    });
+
+    // Keyboard shortcut
+    userInput.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' && !e.shiftKey) {
+        e.preventDefault();
+        if (!sendBtn.disabled) sendMessage();
+      }
+    });
+
+    // Quick action buttons
+    document.querySelectorAll('.quick-btn, .example-pill').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const msg = btn.dataset.msg;
+        userInput.value = msg;
+        userInput.dispatchEvent(new Event('input'));
+        sendMessage();
+      });
+    });
+
+    sendBtn.addEventListener('click', sendMessage);
+    resetBtn.addEventListener('click', resetConversation);
+
+    function getTime() {
+      return new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+    }
+
+    function appendUserMessage(text) {
+      examplesBar.style.display = 'none';
+      const div = document.createElement('div');
+      div.className = 'message message-user';
+      div.innerHTML = `
+        <div class="msg-body">
+          <div class="msg-meta">You <span class="msg-time">${getTime()}</span></div>
+          <div class="msg-content">${escapeHtml(text)}</div>
+        </div>
+      `;
+      messagesContainer.appendChild(div);
+      requestAnimationFrame(() => div.classList.add('visible'));
+      scrollToBottom();
+    }
+
+    function appendAIMessage() {
+      const div = document.createElement('div');
+      div.className = 'message message-ai';
+      div.innerHTML = `
+        <div class="msg-avatar">
+          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M12 3C9 3 6 5.25 6 9c0 2.25.75 3.75 1.5 5.25L9 19.5c.375 1.5 1.125 2.25 3 2.25s2.625-.75 3-2.25l1.5-5.25C17.25 12.75 18 11.25 18 9c0-3.75-3-6-6-6z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <div class="msg-body">
+          <div class="msg-meta">DentalCare AI <span class="msg-time">${getTime()}</span></div>
+          <div class="msg-content typing-content">
+            <span class="typing-indicator"><span></span><span></span><span></span></span>
+          </div>
+        </div>
+      `;
+      messagesContainer.appendChild(div);
+      requestAnimationFrame(() => div.classList.add('visible'));
+      scrollToBottom();
+      return div.querySelector('.typing-content');
+    }
+
+    function escapeHtml(text) {
+      return text.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/\n/g, '<br>');
+    }
+
+    function formatAIContent(text) {
+      return text
+        .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+        .replace(/\*(.*?)\*/g, '<em>$1</em>')
+        .replace(/`(.*?)`/g, '<code>$1</code>')
+        .replace(/\n/g, '<br>');
+    }
+
+    function scrollToBottom() {
+      messagesContainer.scrollTo({ top: messagesContainer.scrollHeight, behavior: 'smooth' });
+    }
+
+    async function sendMessage() {
+      const text = userInput.value.trim();
+      if (!text) return;
+
+      userInput.value = '';
+      userInput.style.height = 'auto';
+      sendBtn.disabled = true;
+      userInput.disabled = true;
+
+      appendUserMessage(text);
+      const contentEl = appendAIMessage();
+      let fullText = '';
+      let isFirstToken = true;
+
+      try {
+        const response = await fetch('/chat', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ message: text }),
+        });
+
+        const reader = response.body.getReader();
+        const decoder = new TextDecoder();
+
+        while (true) {
+          const { done, value } = await reader.read();
+          if (done) break;
+
+          const chunk = decoder.decode(value);
+          const lines = chunk.split('\n');
+
+          for (const line of lines) {
+            if (!line.startsWith('data: ')) continue;
+            const json = line.slice(6).trim();
+            if (!json) continue;
+
+            try {
+              const data = JSON.parse(json);
+
+              if (data.token) {
+                if (isFirstToken) {
+                  contentEl.innerHTML = '';
+                  isFirstToken = false;
+                }
+                fullText += data.token;
+                contentEl.innerHTML = formatAIContent(fullText);
+                scrollToBottom();
+              }
+
+              if (data.error) {
+                contentEl.innerHTML = `<span class="error-msg">⚠️ ${escapeHtml(data.error)}</span>`;
+              }
+
+              if (data.done && isFirstToken) {
+                contentEl.innerHTML = '<span class="error-msg">⚠️ No response received.</span>';
+              }
+
+            } catch (e) { /* ignore parse errors */ }
+          }
+        }
+      } catch (err) {
+        contentEl.innerHTML = `<span class="error-msg">⚠️ Connection error. Please try again.</span>`;
+      }
+
+      userInput.disabled = false;
+      userInput.focus();
+      sendBtn.disabled = !userInput.value.trim();
+    }
+
+    async function resetConversation() {
+      await fetch('/reset', { method: 'POST' });
+      messagesContainer.innerHTML = '';
+      examplesBar.style.display = 'flex';
+
+      const welcome = document.createElement('div');
+      welcome.className = 'message message-ai welcome-msg visible';
+      welcome.innerHTML = `
+        <div class="msg-avatar">
+          <svg viewBox="0 0 24 24" fill="none"><path d="M12 3C9 3 6 5.25 6 9c0 2.25.75 3.75 1.5 5.25L9 19.5c.375 1.5 1.125 2.25 3 2.25s2.625-.75 3-2.25l1.5-5.25C17.25 12.75 18 11.25 18 9c0-3.75-3-6-6-6z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg>
+        </div>
+        <div class="msg-body">
+          <div class="msg-meta">DentalCare AI <span class="msg-time">${getTime()}</span></div>
+          <div class="msg-content">
+            <p>Conversation reset. How can I help you today?</p>
+          </div>
+        </div>
+      `;
+      messagesContainer.appendChild(welcome);
+      scrollToBottom();
+    }
+  </script>
+</body>
+</html>
